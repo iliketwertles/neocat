@@ -1,5 +1,6 @@
 # Neocat
-Made to replace cat and add rainbow text option for funzies
+Made to replace cat and add rainbow text option for funzies  
+now with dir reading and gz compressed text file reading
 
 
 Example command:  
@@ -10,5 +11,6 @@ Usage: ncat [OPTION]... [FILE]...
 
 options:  
 -h      shows this menu  
--r      reads file and outputs as rainbow
+-r      reads file and outputs as rainbow  
+-g      reads file compressed as gz
 ```
