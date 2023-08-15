@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 rainbow-text = "0.1.5"
+flate2 = "1.0"

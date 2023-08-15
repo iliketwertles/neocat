@@ -1,27 +1,15 @@
-use rainbow_text::Rainbow;
+use crate::norm_file::read_normal;
+use crate::norm_file::read_rain;
+use crate::gz_file::ungz;
 use std::env;
+use std::path::Path;
 use std::fs;
-
-fn read_normal(file: String) {
-    let data = fs::read_to_string(file).unwrap();
-    println!("{}", data)
-}
-
-fn read_rain(file: String) {
-    let args_bad: Vec<String> = env::args().collect();
-    match args_bad.len() {
-        3 => {
-            let arg: &str = &file;
-            let data = fs::read_to_string(arg).unwrap();
-            Rainbow::default().write(data.as_str()).unwrap();
-        }
-        _ => println!("no.")
-    }
-}
+mod norm_file;
+mod gz_file;
 
 fn main() {
 
-    let help = "Usage: ncat [OPTION]... [FILE]...
+    let help = "Usage: ncat [OPTION]... [FILE/DIR]...
 
 options:
 -h      shows this menu
@@ -38,10 +26,24 @@ options:
                 }
             },
             "-h" => println!("{}", help),
-            _ => read_normal(args_bad[1].to_string()),
+            "-g" => ungz(args_bad[2].to_string()),
+            _ => {
+                if Path::new(&args_bad[1]).is_dir() {
+                    let paths = fs::read_dir(&args_bad[1]).unwrap();
+                    for path in paths {
+                        println!("{}", path.unwrap().path().display());
+                    }
+                }else {
+                    read_normal(args_bad[1].to_string());
+                }
+            },
         }
     }else {
         println!("You need to supply a file");
     }
 
 }
+
+
+
+//read_normal(args_bad[1].to_string())
